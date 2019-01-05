@@ -1,0 +1,118 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=400px, initial-scale=1">
+<link href="bootstrap.css" rel="stylesheet">
+<link href="bootstrap-switch.css" rel="stylesheet">
+<script src="jquery.js"></script>
+<script src="bootstrap-switch.js"></script>
+
+</head>
+
+
+<body>
+<h3 align="center">Greenhouse Environment Controller</h3>
+
+<div>
+<table align="center">
+  <tr>
+    <td><label for="relay1">Cooler</label></td>
+    <td><input type="checkbox" name="relay1" id="relay1"checked></td>
+  </tr>
+    
+    <tr>
+    <td><label for="relay3">Humidifier</label></td>
+    <td><input type="checkbox" name="relay3" id="relay3"checked></td>
+  </tr>
+    
+
+
+</table>
+
+
+<p align="center">Cooler is  <span id="feedback1"></span> </p>
+
+
+
+<p align="center">Humidifier is <span id="feedback3"></span> </p>
+</div>
+<div align="center">
+<a href="tempnhum.php">Check temperature and humidity</a>
+</div>
+
+<script type="text/javascript">
+
+
+$.fn.bootstrapSwitch.defaults.offColor="danger";
+
+
+
+$("[name='relay1']").bootstrapSwitch();
+$("[name='relay2']").bootstrapSwitch();
+$("[name='relay3']").bootstrapSwitch();
+$("[name='relay4']").bootstrapSwitch();
+
+
+
+$(document).ready(function(){
+
+  $.ajax({
+    method: "POST",
+    url: "firstCheck.php",
+    data: {}
+  })
+  .done(function( msg ) {
+    msg = JSON.parse(msg);
+    msg = JSON.parse(msg);
+
+    for(var i = 0 ; i < 4; i++){
+
+      if(msg[i] == true){
+        $("#feedback"+(i+1)).html("Turned On");
+      }else{
+        $("#feedback"+(i+1)).html("Turned Off");
+      } 
+      $("[name='relay"+(i+1)+"']").bootstrapSwitch('state',msg[i]);
+    } 
+});
+
+
+
+});
+
+
+
+
+
+
+$('input[name="relay1"],'+
+  'input[name="relay2"],'+
+  'input[name="relay3"],'+
+  'input[name="relay4"]').on('switchChange.bootstrapSwitch', function(event, state) {
+
+var relayID = event.target.id.substring(event.target.id.length - 1);
+
+
+
+
+$.ajax({
+  method: "POST",
+  url: "changeState.php",
+  data: { clicked :state , relayId:relayID}
+})
+  .done(function( msg ) {
+  if(msg == "true"){
+    $("#feedback"+(relayID)).html("Turned On");
+  }else{
+    $("#feedback"+(relayID)).html("Turned Off");
+  } 
+
+  });
+
+
+});
+</script>
+
+</body>
+
+</html>
