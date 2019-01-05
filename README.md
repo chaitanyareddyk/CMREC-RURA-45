@@ -6,13 +6,13 @@ Automated Greenhouse Environment Monitoring and Regulating
 Clone the Repo locally:
 
 ```
-git clone https://github.com/iprhub/center-forward-next.git
+git clone https://github.com/chaitanyareddyk/CMREC-RURA-45
 ```
 
 Goto the cloned Repo directory:
 
 ```
-cd iprhub
+cd CMREC-RURA-45
 ```
 
 ### Getting things ready:
