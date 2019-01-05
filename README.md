@@ -21,3 +21,4 @@ cd iprhub
 2. Copy the files in Home directory to your rpi3 home directory.
 3. Copy the web-app to your apache's www directory.
 4. Open your browser and goto http://localhost .
+5. A web interface will appear, through which you can monitor and regulate the greenhouse environment effortlessly.
